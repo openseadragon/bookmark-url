@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OpenSeadragon Bookmark URL Demo</title>
+        <script src="https://cdn.jsdelivr.net/npm/openseadragon@2.3/build/openseadragon/openseadragon.min.js"></script>
+        <script src="openseadragon-bookmark-url.js"></script>
+        <style type="text/css">
+
+            html,
+            body,
+            .openseadragon1 {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="contentDiv" class="openseadragon1"></div>
+        <script>
+
+            var tileSource = {
+                Image: {
+                    xmlns: "http://schemas.microsoft.com/deepzoom/2008",
+                    Url: "http://openseadragon.github.io/example-images/highsmith/highsmith_files/",
+                    Format: "jpg",
+                    Overlap: "2",
+                    TileSize: "256",
+                    Size: {
+                        Height: "9221",
+                        Width:  "7026"
+                    }
+                }
+            };
+
+            var viewer = OpenSeadragon({
+                id: "contentDiv",
+                prefixUrl: "https://cdn.jsdelivr.net/npm/openseadragon@2.3/build/openseadragon/images/",
+                tileSources: tileSource
+            });
+
+            viewer.bookmarkUrl();
+
+    </script>
+    </body>
+</html>
