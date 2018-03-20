@@ -1,4 +1,5 @@
-# bookmark-url
+# Bookmark URL
+
 An OpenSeadragon plugin for updating the zoom/pan in the page URL.
 
 ## Usage
