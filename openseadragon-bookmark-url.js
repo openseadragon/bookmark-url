@@ -16,6 +16,7 @@
         var self = this;
 
         var changing = false;
+        var changingTimeout;
 
         var parseHash = function() {
             var params = {};
@@ -42,14 +43,22 @@
             var pan = self.viewport.getCenter();
             changing = true;
             window.location.hash = 'zoom=' + zoom + '&x=' + pan.x + '&y=' + pan.y;
+
+            clearTimeout(changingTimeout);
+            changingTimeout = setTimeout(function() {
+                changing = false;
+            }, 500);
         };
 
         var useParams = function(params) {
-            if (params.zoom !== undefined) {
+            var zoom = self.viewport.getZoom();
+            var pan = self.viewport.getCenter();
+
+            if (params.zoom !== undefined && params.zoom !== zoom) {
                 self.viewport.zoomTo(params.zoom, null, true);
             }
 
-            if (params.x !== undefined && params.y !== undefined) {
+            if (params.x !== undefined && params.y !== undefined && (params.x !== pan.x || params.y !== pan.y)) {
                 self.viewport.panTo(new $.Point(params.x, params.y), true);
             }
         };
@@ -68,9 +77,7 @@
         this.addHandler('pan', updateUrl);
 
         window.addEventListener('hashchange', function() {
-            if (changing) {
-                changing = false;
-            } else {
+            if (!changing) {
                 useParams(parseHash());
             }
         }, false);
