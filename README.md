@@ -16,4 +16,4 @@ See demo.html for an example.
 
 ## Sponsored By
 
-Thanks to @jason-green-io for the generous support!
+Thanks to [@jason-green-io](https://github.com/jason-green-io) for the generous support!
