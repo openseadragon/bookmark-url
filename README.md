@@ -13,3 +13,7 @@ viewer.bookmarkUrl();
 It'll take the viewer to wherever the page's hash parameters point, and it'll update the page URL with hash parameters.
 
 See demo.html for an example.
+
+## Sponsored By
+
+Thanks to @jason-green-io for the generous support!
