@@ -1,6 +1,6 @@
 {
   "name": "openseadragon-bookmark-url",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An OpenSeadragon plugin that adds bookmark URL capability.",
   "main": "openseadragon-bookmark-url.js",
   "dependencies": {

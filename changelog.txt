@@ -1,6 +1,11 @@
 OPENSEADRAGON BOOKMARK URL CHANGELOG
 ===================================
 
+0.0.2:
+
+* Our URL changes no longer affect the browser history
+* Updating the URL less frequently to avoid distracting the user
+
 0.0.1:
 
 * First version

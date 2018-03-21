@@ -1,4 +1,4 @@
-// OpenSeadragon Bookmark URL plugin 0.0.1
+// OpenSeadragon Bookmark URL plugin 0.0.2
 
 (function() {
 
@@ -15,8 +15,7 @@
     $.Viewer.prototype.bookmarkUrl = function() {
         var self = this;
 
-        var changing = false;
-        var changingTimeout;
+        var updateTimeout;
 
         var parseHash = function() {
             var params = {};
@@ -39,15 +38,14 @@
         };
 
         var updateUrl = function() {
-            var zoom = self.viewport.getZoom();
-            var pan = self.viewport.getCenter();
-            changing = true;
-            window.location.hash = 'zoom=' + zoom + '&x=' + pan.x + '&y=' + pan.y;
-
-            clearTimeout(changingTimeout);
-            changingTimeout = setTimeout(function() {
-                changing = false;
-            }, 500);
+            // We only update once it's settled, so we're not constantly flashing the URL.
+            clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(function() {
+                var zoom = self.viewport.getZoom();
+                var pan = self.viewport.getCenter();
+                var url = location.pathname + '#zoom=' + zoom + '&x=' + pan.x + '&y=' + pan.y;
+                history.replaceState({}, '', url);
+            }, 100);
         };
 
         var useParams = function(params) {
@@ -76,10 +74,10 @@
         this.addHandler('zoom', updateUrl);
         this.addHandler('pan', updateUrl);
 
+        // Note that out own replaceState calls don't trigger hashchange events, so this is only if
+        // the user has modified the URL (by pasting one in, for instance).
         window.addEventListener('hashchange', function() {
-            if (!changing) {
-                useParams(parseHash());
-            }
+            useParams(parseHash());
         }, false);
     };
 
