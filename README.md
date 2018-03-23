@@ -12,7 +12,7 @@ viewer.bookmarkUrl();
 
 It'll take the viewer to wherever the page's hash parameters point, and it'll update the page URL with hash parameters.
 
-See demo.html for an example.
+See demo.html for an example. You can also see it in the wild here: https://minecraft.greener.ca/byblos/map/overworld/
 
 ## Sponsored By
 
