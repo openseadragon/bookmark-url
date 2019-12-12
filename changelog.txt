@@ -1,6 +1,10 @@
 OPENSEADRAGON BOOKMARK URL CHANGELOG
 ===================================
 
+0.0.3:
+
+* Added event so you can watch for URL changes
+
 0.0.2:
 
 * Our URL changes no longer affect the browser history
