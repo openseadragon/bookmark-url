@@ -43,8 +43,13 @@
             updateTimeout = setTimeout(function() {
                 var zoom = self.viewport.getZoom();
                 var pan = self.viewport.getCenter();
+                var oldUrl = location.pathname + location.hash;
                 var url = location.pathname + '#zoom=' + zoom + '&x=' + pan.x + '&y=' + pan.y;
                 history.replaceState({}, '', url);
+
+                if (url !== oldUrl) {
+                    self.raiseEvent('bookmark-url-change', { url: location.href });
+                }
             }, 100);
         };
 

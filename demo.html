@@ -40,6 +40,10 @@
                 tileSources: tileSource
             });
 
+            viewer.addHandler('bookmark-url-change', function(event) {
+                console.log('New URL:', event.url);
+            });
+
             viewer.bookmarkUrl();
 
     </script>
