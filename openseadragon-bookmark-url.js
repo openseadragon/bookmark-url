@@ -10,7 +10,7 @@
             throw new Error('OpenSeadragon is missing.');
         }
     }
-    
+
     // ----------
     $.Viewer.prototype.bookmarkUrl = function({trackPage = false} = {}) {
         var self = this;
@@ -92,13 +92,12 @@
         } else {
             useParams(params);
         }
-        
+
         this.addHandler('zoom', updateUrl);
         this.addHandler('pan', updateUrl);
         if (trackPage) {
             this.addHandler('page', updateUrl);
         }
-
 
         // Note that out own replaceState calls don't trigger hashchange events, so this is only if
         // the user has modified the URL (by pasting one in, for instance).
