@@ -12,7 +12,10 @@
     }
 
     // ----------
-    $.Viewer.prototype.bookmarkUrl = function({trackPage = false} = {}) {
+    $.Viewer.prototype.bookmarkUrl = function(options) {
+        options = options || {};
+        var trackPage = options.trackPage || false;
+
         var self = this;
 
         var updateTimeout;
@@ -61,14 +64,6 @@
             var zoom = self.viewport.getZoom();
             var pan = self.viewport.getCenter();
             var page = self.currentPage();
-
-            if (params.zoom !== undefined && params.zoom !== zoom) {
-                self.viewport.zoomTo(params.zoom, null, true);
-            }
-
-            if (params.x !== undefined && params.y !== undefined && (params.x !== pan.x || params.y !== pan.y)) {
-                self.viewport.panTo(new $.Point(params.x, params.y), true);
-            }
             
             if (trackPage && params.page !== undefined && params.page !== page) {
                 self.goToPage(params.page);
@@ -80,6 +75,13 @@
                         self.viewport.panTo(new $.Point(params.x, params.y), true);
                     }
                 });
+            } else {
+                if (params.zoom !== undefined && params.zoom !== zoom) {
+                    self.viewport.zoomTo(params.zoom, null, true);
+                }
+                if (params.x !== undefined && params.y !== undefined && (params.x !== pan.x || params.y !== pan.y)) {
+                    self.viewport.panTo(new $.Point(params.x, params.y), true);
+                }
             }
         };
 
