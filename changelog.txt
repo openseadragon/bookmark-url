@@ -1,6 +1,10 @@
 OPENSEADRAGON BOOKMARK URL CHANGELOG
 ===================================
 
+0.0.4:
+
+* Added option for including page tracking in URL (#5 @camdey)
+
 0.0.3:
 
 * Added event so you can watch for URL changes

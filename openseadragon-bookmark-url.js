@@ -1,4 +1,4 @@
-// OpenSeadragon Bookmark URL plugin 0.0.2
+// OpenSeadragon Bookmark URL plugin 0.0.4
 
 (function() {
 
@@ -64,7 +64,7 @@
             var zoom = self.viewport.getZoom();
             var pan = self.viewport.getCenter();
             var page = self.currentPage();
-            
+
             if (trackPage && params.page !== undefined && params.page !== page) {
                 self.goToPage(params.page);
                 self.addOnceHandler('open', function() {
