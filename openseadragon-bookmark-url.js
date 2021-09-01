@@ -12,7 +12,10 @@
     }
 
     // ----------
-    $.Viewer.prototype.bookmarkUrl = function() {
+    $.Viewer.prototype.bookmarkUrl = function(options) {
+        options = options || {};
+        var trackPage = options.trackPage || false;
+
         var self = this;
 
         var updateTimeout;
@@ -43,8 +46,12 @@
             updateTimeout = setTimeout(function() {
                 var zoom = self.viewport.getZoom();
                 var pan = self.viewport.getCenter();
+                var page = self.currentPage();
                 var oldUrl = location.pathname + location.hash;
                 var url = location.pathname + '#zoom=' + zoom + '&x=' + pan.x + '&y=' + pan.y;
+                if (trackPage) {
+                    url = url + '&page=' + page;
+                }
                 history.replaceState({}, '', url);
 
                 if (url !== oldUrl) {
@@ -56,13 +63,25 @@
         var useParams = function(params) {
             var zoom = self.viewport.getZoom();
             var pan = self.viewport.getCenter();
-
-            if (params.zoom !== undefined && params.zoom !== zoom) {
-                self.viewport.zoomTo(params.zoom, null, true);
-            }
-
-            if (params.x !== undefined && params.y !== undefined && (params.x !== pan.x || params.y !== pan.y)) {
-                self.viewport.panTo(new $.Point(params.x, params.y), true);
+            var page = self.currentPage();
+            
+            if (trackPage && params.page !== undefined && params.page !== page) {
+                self.goToPage(params.page);
+                self.addOnceHandler('open', function() {
+                    if (params.zoom !== undefined) {
+                        self.viewport.zoomTo(params.zoom, null, true);
+                    }
+                    if (params.x !== undefined && params.y !== undefined && (params.x !== pan.x || params.y !== pan.y)) {
+                        self.viewport.panTo(new $.Point(params.x, params.y), true);
+                    }
+                });
+            } else {
+                if (params.zoom !== undefined && params.zoom !== zoom) {
+                    self.viewport.zoomTo(params.zoom, null, true);
+                }
+                if (params.x !== undefined && params.y !== undefined && (params.x !== pan.x || params.y !== pan.y)) {
+                    self.viewport.panTo(new $.Point(params.x, params.y), true);
+                }
             }
         };
 
@@ -78,6 +97,9 @@
 
         this.addHandler('zoom', updateUrl);
         this.addHandler('pan', updateUrl);
+        if (trackPage) {
+            this.addHandler('page', updateUrl);
+        }
 
         // Note that out own replaceState calls don't trigger hashchange events, so this is only if
         // the user has modified the URL (by pasting one in, for instance).
